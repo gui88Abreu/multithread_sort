@@ -28,3 +28,5 @@ Entrada | Saida
    limítrofes ou mal-definidos.
 1. Lembre-se de seguir as [instruções de submissão](docs/instrucoes.md).
 1. Se desejar, proponha novos casos de teste.
+1. Link para uma breve explicação do quicksort: 
+        https://www.youtube.com/watch?v=MZaf_9IZCrc&t=203s
