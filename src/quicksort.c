@@ -16,8 +16,6 @@ int divide(int v[], int p, int r){
 }
 
 void print_vector(int *numbers_vector, int length){
-  for(int i =0; i < 60; i++) printf("-");
-  printf("\n");
   for(int i = 0; i < length-1; i++){
     printf("%d ", numbers_vector[i]);
   }

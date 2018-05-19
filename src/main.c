@@ -32,7 +32,6 @@ int main() {
 
   /* Le no maximo N_MAX numeros inteiros seguidos de um \n*/
   numbers_vector = read_numbers(&length, size);
-  print_vector(numbers_vector, length);
   task_list = create_task_list(numbers_vector);
   push_task(task_list, 0, length-1);
 
@@ -60,21 +59,28 @@ void *thread_worker(void *arg){
   while (*t_arg->n_working > 0 || !is_empty(t_arg->task_list)){
     pthread_mutex_lock(&key1);
     while (is_empty(t_arg->task_list) && *t_arg->n_working > 0);
-    if (is_empty(t_arg->task_list)) break;
-
+    
+    if (is_empty(t_arg->task_list)){
+      pthread_mutex_unlock(&key1);  
+      break;
+    }
     t_arg->n_working += 1;
+
     pthread_mutex_lock(&key2);
+    //print_list(t_arg->task_list);
     pop_task(t_arg->task_list, &p, &r);
-    pthread_mutex_unlock(&key2);
     pthread_mutex_unlock(&key1);
+    pthread_mutex_unlock(&key2);
 
     j = divide(t_arg->task_list->vector, p, r);
     
     pthread_mutex_lock(&key2);
     if (p < j-1) push_task(t_arg->task_list, p, j-1);
     if (j+1 < r) push_task(t_arg->task_list, j+1, r);
-    t_arg->n_working -= 1;
     pthread_mutex_unlock(&key2);
+    pthread_mutex_lock(&key1);
+    t_arg->n_working -= 1;
+    pthread_mutex_unlock(&key1);
   }
 
   return NULL;
