@@ -10,7 +10,7 @@ int divide(int v[], int p, int r){
         ++i; --j;
     }
   }
-  // agora i == j+1                 
+                   
   v[p] = v[j], v[j] = c;
   return j; 
 }
